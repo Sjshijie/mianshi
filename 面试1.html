@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+        }
+
+        .left {
+            width: 100px;
+            height: 100px;
+            background: yellow;
+            float: left;
+        }
+
+        .right {
+            background: red;
+            overflow: hidden;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const fucArr = [
+            next => {
+                setTimeout(() => {
+                    console.log(1);
+                    next()
+                }, 300)
+            },
+            next => {
+                setTimeout(() => {
+                    console.log(2);
+                    next()
+                }, 200)
+            },
+            next => {
+                setTimeout(() => {
+                    console.log(3);
+                    next()
+                }, 100)
+            }
+        ]
+
+        // var run = arr => {
+        //     // 递归语句千万条，找到出口第一条，那咱们判断递归出口的条件就是等待队列为空
+        //     if (arr.length === 0) return;
+        //     // 好的，一句话执行过程写完了
+        //     arr[0](() => run(arr.slice(1)));
+        // }
+        // run(fucArr)
+
+
+        // 实现一个run方法,使得run(fucArr)能顺序输出1、2、3.
+
+        var run = arr => {
+
+            arr[0](arr[1].bind(null, arr[2].bind(null, () => { })))
+            console.log(arr[2].bind(null, () => { }))
+
+        }
+        run(fucArr)
+
+    </script>
+</body>
+
+</html>
